@@ -27,10 +27,14 @@ for(k in 1:length(years)){
 
 new_mat2 <- data.frame(new_mat)
 
-new_mat2[,7] <- unique(suicide_data$`State Name`)
-colnames(new_mat2)=c("2015","2016","2017","2018","2019","2020","States")
+rownames(new_mat2) <- unique(suicide_data$`State Name`)
+colnames(new_mat2)=c("2015","2016","2017","2018","2019","2020")
 
-plot(new_mat2[0,-7],new_mat2[1,-7])
+mat <- as.matrix(new_mat2)
+
+jpeg('heatmap.jpg')
+
+heatmap(mat, main="Total Number of Suicides by States from 2015-2020")
 
 jpeg('rplot.jpg')
 
