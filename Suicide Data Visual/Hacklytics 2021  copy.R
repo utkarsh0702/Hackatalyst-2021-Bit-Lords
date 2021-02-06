@@ -1,5 +1,6 @@
 library("tidyverse")
 library('data.table')
+library('plotly')
 
 #### extract deaths by suicide per state in 2015-2020
 
@@ -31,27 +32,32 @@ rownames(new_mat2) <- unique(suicide_data$`State Name`)
 colnames(new_mat2)=c("2015","2016","2017","2018","2019","2020")
 
 mat <- as.matrix(new_mat2)
+mat2 <- data.frame(mat)
+
+## regular heat map
 
 jpeg('heatmap.jpg')
 
 heatmap(mat, main="Total Number of Suicides by States from 2015-2020")
+
+## dynamic heat map
+
+## plot heat map
+dyn_heatmap <- plot_ly(
+  x = colnames(new_mat2),
+  y = rownames(new_mat2),
+  z = mat,
+  type = 'heatmap'
+)
+
+htmlwidgets::saveWidget(dyn_heatmap, "dyn_heatmap.html")
+
+## regular scatter plot
 
 jpeg('rplot.jpg')
 
 plot(x=colnames(cum_sum[-7]), y=cum_sum[1,-7],type="o",lty=1,col="red"
      ,main="Total Deaths by Suicide from 2015-2020 in America",ylim=c(180,250),
      xlab = "Year",ylab = "Number of Deaths per 100 000 population")
-
 dev.off()
-#### extract covid cases per state in 2020
-
-# covid_cases <- COVID_19[grep("COVID-19 Case Rate", COVID_19$`Measure Name`),]
-# covid_cases_val <- select(covid_cases,"Value" )
-# new_data <- data.frame("State Names" =uniq_names, "Suicide Deaths" =sum_vec, "Covid Cases" =covid_cases_val)
-# 
-# plot(new_data$Value,new_data$Suicide.Deaths,xlab = "Covid Cases by State", 
-#      ylab="Suicide by Death by States",main="Relationship between Covid Cases and Suicides",ylim=c(0,600))
-# 
-
-
 
