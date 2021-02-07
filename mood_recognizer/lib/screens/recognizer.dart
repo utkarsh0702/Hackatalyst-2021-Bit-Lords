@@ -14,11 +14,44 @@ class Recognizer extends StatefulWidget {
 }
 
 class _RecognizerState extends State<Recognizer> {
-  // ------------------------- List to match ---------------------///
-  List<String> check = ['angry', 'depressed', 'low'];
+  // ------------------------- List to match ---------------------//
+  List<String> check = [
+    'angry',
+    'depressed',
+    'pressure',
+    'strain',
+    'tension',
+    'fear',
+    'bother',
+    'trouble',
+    'worry',
+    'sad',
+    'agonize',
+    'despair',
+    'lonely',
+    'heartbroken',
+    'gloomy',
+    'disappointed',
+    'hopeless',
+    'grieved',
+    'unhappy',
+    'troubled',
+    'miserable',
+    'nervous',
+    'horrified',
+    'stressed',
+    'frustrated',
+    'annoyed',
+    'irritated',
+    'mad',
+    'vengeful',
+    'insulted'
+  ];
 
   //--------------random -------------------//
   Random random = Random();
+
+  int val1=0, val2=0; double value = 0.0;
 
   stt.SpeechToText _speech;
   bool _isListening = false;
@@ -148,10 +181,15 @@ class _RecognizerState extends State<Recognizer> {
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
 
-            // if (check.any((e) => _text.contains(e))) {
             if (_speech.lastStatus == 'notListening') {
               print(_classifier.classify(_text));
-              if (_classifier.classify(_text) == 0) {
+
+              if (check.any((e) => _text.contains(e))) {val1 = 1;}
+              else{ val1 = 0;}
+              val2 = _classifier.classify(_text);
+              value = val1*0.66 + val2*0.33;
+
+              if (value>0.5) {
                 setState(() => _isListening = false);
                 _speech.stop();
                 Vibration.vibrate(pattern: [
@@ -197,7 +235,7 @@ class _RecognizerState extends State<Recognizer> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 70.0),
+          padding: const EdgeInsets.only(bottom: 50.0),
           child: AvatarGlow(
             animate: _isListening,
             glowColor: Theme.of(context).accentColor,
@@ -238,28 +276,6 @@ class _RecognizerState extends State<Recognizer> {
                     ),
                   ],
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 50.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width - 100,
-                      height: 30.0,
-                      onPressed: () {},
-                      color: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          'COVID Mental Health Stats',
-                          style: TextStyle(color: Colors.white, fontSize: 20.0),
-                        ),
-                      )),
-                ],
               ),
             ),
           ],
