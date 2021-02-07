@@ -3,8 +3,9 @@
 ###### To get started with streamlit : https://www.streamlit.io/
 
 <h2> What is this project about? </h2>
-<p> MindbBoost is an application that helps users navigate through their lows and celebrate through their highs </p> <br>
-<a href = "https://devpost.com/software/mood-boost">Click here</a> <p> to know more about this project </p> <br>
+<h5> <b>MindBoost<b> is an application that helps users navigate through their lows and celebrate through their highs... </h5> <br>
+<p> To know more about this project: </p> <br>
+<a href = "https://devpost.com/software/mood-boost">Click here</a>
 
 <h3> Citations </h3>
 <p>Son C, Hegde S, Smith A, Wang X, Sasangohar F <br>
